@@ -46,6 +46,20 @@ var template = React.createElement(
     )
 );
 
+var count = 0;
+var addOne = function addOne() {
+    count++;
+    appRender();
+};
+var minusOne = function minusOne() {
+    count--;
+    appRender();
+};
+var reset = function reset() {
+    count = 0;
+    appRender();
+};
+
 var user = {
     name: 'Leon Garibello',
     age: 26,
@@ -61,7 +75,6 @@ function getLocation(location) {
         );
     }
 }
-
 var userTemplate = React.createElement(
     'div',
     null,
@@ -80,4 +93,33 @@ var userTemplate = React.createElement(
 );
 
 var appRoot = document.getElementById('app');
-ReactDOM.render(template, appRoot);
+var appRender = function appRender() {
+    var templateTwo = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            'Count: ',
+            count
+        ),
+        React.createElement(
+            'button',
+            { onClick: addOne },
+            '+1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: minusOne },
+            '-1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: reset },
+            'reset'
+        )
+    );
+
+    ReactDOM.render(templateTwo, appRoot);
+};
+appRender();
