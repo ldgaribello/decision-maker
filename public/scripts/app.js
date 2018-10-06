@@ -21,7 +21,7 @@ var DecisionMaker = function (_React$Component) {
     _this.handleAddOption = _this.handleAddOption.bind(_this);
 
     _this.state = {
-      options: ["Option 1", "Option 2", "Option 3"]
+      options: props.options
     };
     return _this;
   }
@@ -81,6 +81,10 @@ var DecisionMaker = function (_React$Component) {
   return DecisionMaker;
 }(React.Component);
 
+DecisionMaker.defaultProps = {
+  options: []
+};
+
 var Header = function Header(props) {
   return React.createElement(
     "div",
@@ -96,6 +100,11 @@ var Header = function Header(props) {
       props.subtitle
     )
   );
+};
+
+Header.defaultProps = {
+  title: "Default title",
+  subtitle: "Default subtitle"
 };
 
 var Action = function Action(props) {
@@ -192,4 +201,4 @@ var AddOption = function (_React$Component2) {
   return AddOption;
 }(React.Component);
 
-ReactDOM.render(React.createElement(DecisionMaker, null), document.getElementById("app"));
+ReactDOM.render(React.createElement(DecisionMaker, { options: ["Option 1", "Option 2", "Option 3"] }), document.getElementById("app"));

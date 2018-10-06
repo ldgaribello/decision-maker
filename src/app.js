@@ -7,7 +7,7 @@ class DecisionMaker extends React.Component {
     this.handleAddOption = this.handleAddOption.bind(this);
 
     this.state = {
-      options: ["Option 1", "Option 2", "Option 3"]
+      options: props.options
     };
   }
 
@@ -58,6 +58,10 @@ class DecisionMaker extends React.Component {
   }
 }
 
+DecisionMaker.defaultProps = {
+  options: []
+};
+
 const Header = props => {
   return (
     <div>
@@ -65,6 +69,11 @@ const Header = props => {
       <h2>{props.subtitle}</h2>
     </div>
   );
+};
+
+Header.defaultProps = {
+  title: "Default title",
+  subtitle: "Default subtitle"
 };
 
 const Action = props => {
@@ -130,4 +139,7 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(<DecisionMaker />, document.getElementById("app"));
+ReactDOM.render(
+  <DecisionMaker options={["Option 1", "Option 2", "Option 3"]} />,
+  document.getElementById("app")
+);
