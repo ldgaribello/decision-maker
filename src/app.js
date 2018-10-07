@@ -5,6 +5,7 @@ class DecisionMaker extends React.Component {
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
     this.handlePick = this.handlePick.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleDeleteOption = this.handleDeleteOption.bind(this);
 
     this.state = {
       options: props.options
@@ -12,9 +13,11 @@ class DecisionMaker extends React.Component {
   }
 
   handleDeleteOptions() {
-    this.setState(prev => {
-      return { options: [] };
-    });
+    this.setState(() => ({ options: [] }));
+  }
+
+  handleDeleteOption(option) {
+    console.log("Option: ", option);
   }
 
   handlePick() {
@@ -30,11 +33,7 @@ class DecisionMaker extends React.Component {
       return "This option already exists";
     }
 
-    this.setState(prev => {
-      return {
-        options: prev.options.concat(option)
-      };
-    });
+    this.setState(prev => ({ options: prev.options.concat(option) }));
   }
 
   render() {
@@ -51,6 +50,7 @@ class DecisionMaker extends React.Component {
         <Options
           options={this.state.options}
           handleDeleteOptions={this.handleDeleteOptions}
+          handleDeleteOption={this.handleDeleteOption}
         />
         <AddOption handleAddOption={this.handleAddOption} />
       </div>
@@ -91,7 +91,11 @@ const Options = props => {
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
       {props.options.map(option => (
-        <Option key={option} optionText={option} />
+        <Option
+          key={option}
+          optionText={option}
+          handleDeleteOption={props.handleDeleteOption}
+        />
       ))}
       <Option />
     </div>
@@ -99,7 +103,18 @@ const Options = props => {
 };
 
 const Option = props => {
-  return <div>{props.optionText}</div>;
+  return (
+    <div>
+      {props.optionText}
+      <button
+        onClick={(e) => {
+          props.handleDeleteOption(props.optionText);
+        }}
+      >
+        Remove
+      </button>
+    </div>
+  );
 };
 
 class AddOption extends React.Component {
@@ -120,9 +135,7 @@ class AddOption extends React.Component {
     const error = this.props.handleAddOption(option);
 
     if (error) {
-      this.setState(() => {
-        return { error };
-      });
+      this.setState(() => ({ error }));
     }
   }
 
