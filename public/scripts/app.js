@@ -28,6 +28,39 @@ var DecisionMaker = function (_React$Component) {
   }
 
   _createClass(DecisionMaker, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log("Fetching data...");
+
+      try {
+        var json = localStorage.getItem("options");
+        var options = JSON.parse(json);
+
+        if (options) {
+          this.setState(function () {
+            return { options: options };
+          });
+        }
+      } catch (e) {
+        console.log("Invalid JSON");
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log("Saving data...");
+
+      if (prevState.options.length !== this.state.options.length) {
+        var json = JSON.stringify(this.state.options);
+        localStorage.setItem("options", json);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log("Component will unmount");
+    }
+  }, {
     key: "handleDeleteOptions",
     value: function handleDeleteOptions() {
       this.setState(function () {
@@ -139,6 +172,11 @@ var Options = function Options(props) {
       { onClick: props.handleDeleteOptions },
       "Remove All"
     ),
+    props.options.length === 0 && React.createElement(
+      "p",
+      null,
+      "Please add an option to get started!"
+    ),
     props.options.map(function (option) {
       return React.createElement(Option, {
         key: option,
@@ -194,6 +232,8 @@ var AddOption = function (_React$Component2) {
         this.setState(function () {
           return { error: error };
         });
+      } else {
+        e.target.elements.option.value = "";
       }
     }
   }, {
@@ -224,4 +264,4 @@ var AddOption = function (_React$Component2) {
   return AddOption;
 }(React.Component);
 
-ReactDOM.render(React.createElement(DecisionMaker, { options: ["Option 1", "Option 2", "Option 3"] }), document.getElementById("app"));
+ReactDOM.render(React.createElement(DecisionMaker, null), document.getElementById("app"));

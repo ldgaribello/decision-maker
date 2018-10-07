@@ -12,6 +12,34 @@ class DecisionMaker extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log("Fetching data...");
+
+    try {
+      const json = localStorage.getItem("options");
+      const options = JSON.parse(json);
+
+      if (options) {
+        this.setState(() => ({ options: options }));
+      }
+    } catch (e) {
+      console.log("Invalid JSON");
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Saving data...");
+
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem("options", json);
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("Component will unmount");
+  }
+
   handleDeleteOptions() {
     this.setState(() => ({ options: [] }));
   }
@@ -92,6 +120,7 @@ const Options = props => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
+      {props.options.length === 0 && <p>Please add an option to get started!</p>}
       {props.options.map(option => (
         <Option
           key={option}
@@ -137,6 +166,8 @@ class AddOption extends React.Component {
 
     if (error) {
       this.setState(() => ({ error }));
+    } else {
+      e.target.elements.option.value = "";
     }
   }
 
@@ -153,7 +184,4 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <DecisionMaker options={["Option 1", "Option 2", "Option 3"]} />,
-  document.getElementById("app")
-);
+ReactDOM.render(<DecisionMaker />, document.getElementById("app"));
