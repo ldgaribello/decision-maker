@@ -16,8 +16,10 @@ class DecisionMaker extends React.Component {
     this.setState(() => ({ options: [] }));
   }
 
-  handleDeleteOption(option) {
-    console.log("Option: ", option);
+  handleDeleteOption(optionToRemove) {
+    this.setState(prev => ({
+      options: prev.options.filter(option => optionToRemove !== option)
+    }));
   }
 
   handlePick() {
@@ -97,7 +99,6 @@ const Options = props => {
           handleDeleteOption={props.handleDeleteOption}
         />
       ))}
-      <Option />
     </div>
   );
 };
@@ -107,7 +108,7 @@ const Option = props => {
     <div>
       {props.optionText}
       <button
-        onClick={(e) => {
+        onClick={e => {
           props.handleDeleteOption(props.optionText);
         }}
       >

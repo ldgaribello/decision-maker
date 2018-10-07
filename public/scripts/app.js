@@ -36,8 +36,14 @@ var DecisionMaker = function (_React$Component) {
     }
   }, {
     key: "handleDeleteOption",
-    value: function handleDeleteOption(option) {
-      console.log("Option: ", option);
+    value: function handleDeleteOption(optionToRemove) {
+      this.setState(function (prev) {
+        return {
+          options: prev.options.filter(function (option) {
+            return optionToRemove !== option;
+          })
+        };
+      });
     }
   }, {
     key: "handlePick",
@@ -139,8 +145,7 @@ var Options = function Options(props) {
         optionText: option,
         handleDeleteOption: props.handleDeleteOption
       });
-    }),
-    React.createElement(Option, null)
+    })
   );
 };
 
