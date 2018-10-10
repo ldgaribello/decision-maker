@@ -8,7 +8,7 @@ class DecisionMaker extends React.Component {
     this.handleDeleteOption = this.handleDeleteOption.bind(this);
 
     this.state = {
-      options: props.options
+      options: []
     };
   }
 
@@ -88,10 +88,6 @@ class DecisionMaker extends React.Component {
   }
 }
 
-DecisionMaker.defaultProps = {
-  options: []
-};
-
 const Header = props => {
   return (
     <div>
@@ -120,7 +116,9 @@ const Options = props => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
-      {props.options.length === 0 && <p>Please add an option to get started!</p>}
+      {props.options.length === 0 && (
+        <p>Please add an option to get started!</p>
+      )}
       {props.options.map(option => (
         <Option
           key={option}
