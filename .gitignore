@@ -60,3 +60,5 @@ typings/
 # WebStorm
 .idea
 
+# Build
+public/scripts/*
