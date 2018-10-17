@@ -1,4 +1,11 @@
-class DecisionMaker extends React.Component {
+import React from "react";
+
+import Header from "./Header";
+import Action from "./Action";
+import Options from "./Options";
+import AddOption from "./AddOption";
+
+export default class DecisionMaker extends React.Component {
   constructor(props) {
     super(props);
 
@@ -87,99 +94,3 @@ class DecisionMaker extends React.Component {
     );
   }
 }
-
-const Header = props => {
-  return (
-    <div>
-      <h1>{props.title}</h1>
-      <h2>{props.subtitle}</h2>
-    </div>
-  );
-};
-
-Header.defaultProps = {
-  title: "Default title",
-  subtitle: "Default subtitle"
-};
-
-const Action = props => {
-  return (
-    <div>
-      <button onClick={props.handlePick} disabled={!props.hasOptions}>
-        What should I do?
-      </button>
-    </div>
-  );
-};
-
-const Options = props => {
-  return (
-    <div>
-      <button onClick={props.handleDeleteOptions}>Remove All</button>
-      {props.options.length === 0 && (
-        <p>Please add an option to get started!</p>
-      )}
-      {props.options.map(option => (
-        <Option
-          key={option}
-          optionText={option}
-          handleDeleteOption={props.handleDeleteOption}
-        />
-      ))}
-    </div>
-  );
-};
-
-const Option = props => {
-  return (
-    <div>
-      {props.optionText}
-      <button
-        onClick={e => {
-          props.handleDeleteOption(props.optionText);
-        }}
-      >
-        Remove
-      </button>
-    </div>
-  );
-};
-
-class AddOption extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleAddOption = this.handleAddOption.bind(this);
-
-    this.state = {
-      error: undefined
-    };
-  }
-
-  handleAddOption(e) {
-    e.preventDefault();
-
-    const option = e.target.elements.option.value;
-    const error = this.props.handleAddOption(option);
-
-    if (error) {
-      this.setState(() => ({ error }));
-    } else {
-      e.target.elements.option.value = "";
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.error && <p>{this.state.error}</p>}
-        <form onSubmit={this.handleAddOption}>
-          <input type="text" name="option" />
-          <button>Add Option</button>
-        </form>
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(<DecisionMaker />, document.getElementById("app"));
