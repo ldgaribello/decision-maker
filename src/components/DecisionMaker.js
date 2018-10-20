@@ -3,21 +3,14 @@ import React from "react";
 import Header from "./Header";
 import Action from "./Action";
 import Options from "./Options";
+import OptionModal from "./OptionModal";
 import AddOption from "./AddOption";
 
 export default class DecisionMaker extends React.Component {
   state = {
-    options: []
+    options: [],
+    selectedOption: undefined
   };
-
-  constructor(props) {
-    super(props);
-
-    this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-    this.handlePick = this.handlePick.bind(this);
-    this.handleAddOption = this.handleAddOption.bind(this);
-    this.handleDeleteOption = this.handleDeleteOption.bind(this);
-  }
 
   componentDidMount() {
     console.log("Fetching data...");
@@ -60,7 +53,12 @@ export default class DecisionMaker extends React.Component {
   handlePick = () => {
     const randomNum = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[randomNum];
-    alert("Option: " + option);
+
+    this.setState(() => ({ selectedOption: option }));
+  };
+
+  handleClearSelectedOption = () => {
+    this.setState(() => ({ selectedOption: undefined }));
   };
 
   handleAddOption = option => {
@@ -90,6 +88,11 @@ export default class DecisionMaker extends React.Component {
           handleDeleteOption={this.handleDeleteOption}
         />
         <AddOption handleAddOption={this.handleAddOption} />
+
+        <OptionModal
+          selectedOption={this.state.selectedOption}
+          handleClearSelectedOption={this.handleClearSelectedOption}
+        />
       </div>
     );
   }

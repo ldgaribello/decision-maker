@@ -1,10 +1,13 @@
 const path = require("path");
 
+const APP_DIR = path.join(__dirname, "src");
+const BUILD_DIR = path.join(__dirname, "public");
+
 module.exports = {
-  entry: "./src/app.js",
+  entry: path.join(APP_DIR, "app.js"),
   output: {
-    path: path.join(__dirname, "public", "scripts"),
-    filename: "bundle.js"
+    path: BUILD_DIR,
+    filename: path.join("scripts", "bundle.js")
   },
   module: {
     rules: [
@@ -17,6 +20,6 @@ module.exports = {
   },
   devtool: "cheap-module-eval-source-map",
   devServer: {
-    contentBase: path.join(__dirname, "public")
+    contentBase: BUILD_DIR
   }
 };
