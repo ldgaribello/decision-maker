@@ -6,6 +6,10 @@ import Options from "./Options";
 import AddOption from "./AddOption";
 
 export default class DecisionMaker extends React.Component {
+  state = {
+    options: []
+  };
+
   constructor(props) {
     super(props);
 
@@ -13,10 +17,6 @@ export default class DecisionMaker extends React.Component {
     this.handlePick = this.handlePick.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
     this.handleDeleteOption = this.handleDeleteOption.bind(this);
-
-    this.state = {
-      options: []
-    };
   }
 
   componentDidMount() {
@@ -47,23 +47,23 @@ export default class DecisionMaker extends React.Component {
     console.log("Component will unmount");
   }
 
-  handleDeleteOptions() {
+  handleDeleteOptions = () => {
     this.setState(() => ({ options: [] }));
-  }
+  };
 
-  handleDeleteOption(optionToRemove) {
+  handleDeleteOption = optionToRemove => {
     this.setState(prev => ({
       options: prev.options.filter(option => optionToRemove !== option)
     }));
-  }
+  };
 
-  handlePick() {
+  handlePick = () => {
     const randomNum = Math.floor(Math.random() * this.state.options.length);
     const option = this.state.options[randomNum];
     alert("Option: " + option);
-  }
+  };
 
-  handleAddOption(option) {
+  handleAddOption = option => {
     if (!option) {
       return "Enter a valid value to add";
     } else if (this.state.options.indexOf(option) > -1) {
@@ -71,7 +71,7 @@ export default class DecisionMaker extends React.Component {
     }
 
     this.setState(prev => ({ options: prev.options.concat(option) }));
-  }
+  };
 
   render() {
     const title = "Decision Maker";
