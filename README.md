@@ -1,5 +1,5 @@
 # Decision Maker
-This is a web application built with react for an online course
+This is a simple web application built with React.js that picks an option for you
 
 # Build 
 To build the project use the following command:
