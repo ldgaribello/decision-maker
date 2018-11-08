@@ -5,27 +5,33 @@
   color: white;
   font-weight: bold;
   font-size: $l-size;
-  margin-bottom: $xl-size;
+  margin-bottom: $m-size;
   padding: 2.4rem;
   width: 100%;
 }
 
 .big-button:disabled {
-    opacity: .5;
+  opacity: 0.5;
 }
 
 .button {
-    background-color: $purple;
-    border: none;
-    border-bottom: 0.3rem solid darken($purple, 10%);
-    color: white;
-    font-weight: 500;
-    padding: $s-size;
+  background-color: $purple;
+  border: none;
+  border-bottom: 0.3rem solid darken($purple, 10%);
+  color: white;
+  font-weight: 500;
+  padding: $s-size;
 }
 
-.button--link{
-    background-color: transparent;
-    border: none;
-    color: $off-white;
-    padding: 0;
+.button--link {
+  background-color: transparent;
+  border: none;
+  color: $off-white;
+  padding: 0;
+}
+
+@media (min-width: $desktop-breakpoint) {
+    .big-button {
+        margin-bottom: $xl-size;
+    }
 }
